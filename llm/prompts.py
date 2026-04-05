@@ -2,9 +2,9 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import os
-
+load_dotenv()
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     google_api_key=os.getenv("GOOGLE_API_KEY")
 
 )
@@ -32,6 +32,7 @@ if __name__ == "__main__":
         "Prompt: What inspired you?\nJournal: I finally took time to reflect.\nAdvice: Small steps lead to big changes.\nTime: 2025-07-02",
         "Prompt: What held you back today?\nJournal: I felt anxious about deadlines.\nAdvice: Breathe. You're doing your best.\nTime: 2025-07-03"
     ]
+    #print(os.getenv("GOOGLE_API_KEY"))
     print("Generated Prompt:\n", gen_prompt(sample_entries))
 
     test_entry = "Today I felt overwhelmed but managed to push through."
