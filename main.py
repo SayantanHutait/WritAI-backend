@@ -6,8 +6,8 @@ from auth.auth import authenticate_user, create_access_token
 from datetime import timedelta
 from fastapi import Depends
 from auth.auth import get_current_user
-from llm.prompts import gen_prompt, gen_advice
-from llm.db import get_entries, save, get_hist,delete_journal
+from llm.prompts import gen_prompt, gen_advice, analyze_journal, generate_insights
+from llm.db import get_entries, save, get_hist, delete_journal, get_dashboard_data
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -46,8 +46,21 @@ def get_prompt(user_id: str = Depends(get_current_user)):
 def write_journal(data: JournalInput, user_id: str = Depends(get_current_user)):
     prompt = gen_prompt(get_entries(user_id))
     advice = gen_advice(data.journal)
-    save(user_id, prompt, data.journal, advice)
+    metadata = analyze_journal(data.journal)
+    save(user_id, prompt, data.journal, advice, metadata)
     return {"advice": advice}
+
+@app.get("/dashboard")
+def dashboard_data(user_id: str = Depends(get_current_user)):
+    data = get_dashboard_data(user_id)
+    insights = generate_insights(data["entries_text"])
+    
+    return {
+        "mood_trend": data["mood_trend"],
+        "word_cloud_data": data["word_cloud_data"],
+        "topic_distribution": data["topic_distribution"],
+        "insights": insights
+    }
 
 '''def get_current_user():
     return "sayantan123"''' # Replace with a real user_id in your database

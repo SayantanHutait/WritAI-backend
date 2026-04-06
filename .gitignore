@@ -9,3 +9,11 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+# Logs and temporary files
+*.log
+error.txt
+migrate.py
+seed_db.py
+test_dash.py
+
