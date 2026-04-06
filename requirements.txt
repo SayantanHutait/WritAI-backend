@@ -22,6 +22,10 @@ cffi==2.0.0
     # via cryptography
 charset-normalizer==3.4.7
     # via requests
+click==8.3.2
+    # via uvicorn
+colorama==0.4.6
+    # via click
 cryptography==46.0.6
     # via google-auth
 distro==1.9.0
@@ -41,7 +45,9 @@ google-auth==2.49.1
 google-genai==1.70.0
     # via langchain-google-genai
 h11==0.16.0
-    # via httpcore
+    # via
+    #   httpcore
+    #   uvicorn
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
@@ -163,6 +169,8 @@ uuid-utils==0.14.1
     # via
     #   langchain-core
     #   langsmith
+uvicorn==0.44.0
+    # via backend (pyproject.toml)
 websockets==16.0
     # via google-genai
 xxhash==3.6.0
